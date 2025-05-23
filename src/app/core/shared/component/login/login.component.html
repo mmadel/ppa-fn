@@ -1,0 +1,52 @@
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple"></ngx-spinner>
+<div class="login-page">
+  <div class="branding-panel">
+    <div class="logo-area">
+      <img src="assets/images/pt_logo.png" alt="ClientPulse Logo" class="logo" />
+      <!-- <span class="logo-text">COB Solution</span> -->
+    </div>
+
+    <div class="slogan">
+      <h1>We Simplify Clinical Billing</h1>
+      <p>Smart sheets. Faster processing. Empowering clinics with accurate, automated billing and financial workflows.</p>
+
+    </div>
+
+    <div class="features">
+      <div class="feature">📈 Finance</div>
+      <div class="feature">🤝 Customer Care</div>
+      <div class="feature">💡 Billing</div>
+    </div>
+  </div>
+
+
+
+  <div class="form-panel">
+    <div class="login-card">
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+        <label>User Name</label>
+        <input formControlName="userName" placeholder="User Name" required />
+        <div class="error" *ngIf="email?.invalid && email?.touched">
+          Email is required.
+        </div>
+        
+        <label>Password</label>
+        <input formControlName="password" type="password" placeholder="Enter your password" required />
+        <div class="error" *ngIf="password?.invalid && password?.touched">
+          Password must be at least 6 characters.
+        </div>
+        <div class="error" *ngIf="errorMessage">
+          {{errorMessage}}
+        </div>
+        <button type="submit" [disabled]="!bothFieldsTouched()">Sign In</button>
+        
+        <div class="login-footer">
+          <!-- <a routerLink="/forgot-password">Forgot Password?</a>
+          <span>·</span>
+          <a routerLink="/register">Create Account</a> -->
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
