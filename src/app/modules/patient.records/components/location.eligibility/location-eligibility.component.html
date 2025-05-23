@@ -1,0 +1,114 @@
+<ngx-spinner></ngx-spinner>
+<h4>Location Eligibility</h4>
+<hr />
+<!--Search Panel-->
+<c-row>
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Location Eligibility</strong> <small>Search criteria</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          The Abiltiy to search for location eligibility and export selected location.
+        </p>
+
+        <!--
+              <div style="float: left;margin-top: 4%;">
+              <svg cIcon name="cilFindInPage" title="cilFindInPage" size="7xl"></svg>
+            </div>
+          -->
+        <form cForm>
+          <c-row class="mb-3">
+            <label [sm]="2" cCol cLabel="col" for="staticEmail" class="label-width">
+              Btach Number
+            </label>
+            <c-col [sm]="10">
+              <input cFormControl sizing="sm" [(ngModel)]="searchCriteria.pmrbId" name="pmrbId">
+            </c-col>
+          </c-row>
+          <c-row class="mb-3">
+            <label [sm]="2" cCol cLabel="col" for="staticEmail" class="label-width">
+              Location
+            </label>
+            <c-col [sm]="10">
+              <select id="location" cSelect [(ngModel)]="searchCriteria.location" name="location">
+                <option value="none">None</option>
+                <option *ngFor="let loc of locations |async" [value]="loc.name">{{ loc.name }}</option>
+              </select>
+            </c-col>
+          </c-row>
+          <c-row class="mb-3">
+            <label cLabel="col" class="col-sm-2" class="label-width">
+              Status
+            </label>
+            <c-col [sm]="10">
+              <select id="status" cSelect [(ngModel)]="searchCriteria.status" name="status">
+                <option value="none">None</option>
+                <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
+              </select>
+            </c-col>
+          </c-row>
+          <c-row class="mb-3">
+            <label cLabel="col" class="col-sm-2" class="label-width">
+              Last Update
+            </label>
+            <c-col [sm]="10">
+              <input type="date" id="lastUpdateDate" cFormControl [(ngModel)]="searchCriteria.lastUpdate" name="lastUpdate">
+            </c-col>
+          </c-row>
+
+          <c-row>
+            <c-col xs="12" class="text-center">
+              <button cButton class="me-1" color="primary" style="width: 15%;" (click)="search()" [disabled]="isSearchDisabled">
+                Search
+              </button>
+            </c-col>
+          </c-row>
+        </form>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>
+
+<!--Result Table-->
+<div class="table-container"  *ngIf="clinicEligibilityRecord && clinicEligibilityRecord.length > 0; else noData">
+  <table class="styled-table">
+    <thead>
+      <tr>
+        <th>
+          <input type="checkbox" [(ngModel)]="allSelected" (change)="toggleAllSelection()" />
+        </th>
+        <th>Location Name</th>
+        <th>Status</th>
+        <th>Batch Number</th>
+        <th>Last Updated</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let loc of clinicEligibilityRecord">
+        <td>
+          <input type="checkbox" [(ngModel)]="loc.selected" (change)="updateMasterCheckbox()" />
+        </td>
+        <td>{{ loc.clinicName }}</td>
+        <td>
+          <span class="status" [class.active]="loc.status === 'Ready'" [class.inactive]="loc.status === 'Pending'">
+            {{ loc.status }}
+          </span>
+        </td>
+        <td>{{loc.pmrbId}}</td>
+        <td>
+          {{loc.lastUpdate | date:"MM/dd/yyyy" }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="actions mt-3 text-center">
+    <button (click)="exportSelected()" class="mb-3">⬇️ Export</button>
+  </div>
+</div>
+<ng-template #noData>
+  <div class="no-data-message">
+    🚫 No data found. Please try Search or use another criteria.
+  </div>
+</ng-template>

@@ -1,0 +1,133 @@
+.label-width{
+    width: 7%;
+}
+:host {
+  display: block;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+/* Container styling */
+.table-container {
+  margin-top: 24px;
+  overflow-x: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  background-color: #fff;
+}
+
+/* Table base styles */
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 700px;
+}
+
+/* Table header */
+.styled-table thead {
+  background-color: #2563eb; /* matches button color */
+  color: #ffffff;
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.styled-table th,
+.styled-table td {
+  padding: 14px 18px;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+/* Alternate row colors */
+.styled-table tbody tr:nth-child(even) {
+  background-color: #f8fafc;
+}
+
+/* Hover effect */
+.styled-table tbody tr:hover {
+  background-color: #e0f2fe;
+}
+
+/* Checkbox styling */
+input[type="checkbox"] {
+  transform: scale(1.3);
+  cursor: pointer;
+  accent-color: #2563eb;
+}
+
+/* Status badges */
+.status {
+  display: inline-block;
+  padding: 4px 10px;
+  font-size: 13px;
+  border-radius: 9999px;
+  font-weight: 600;
+  text-align: center;
+  min-width: 70px;
+}
+
+.status.active {
+  background-color: #dcfce7;
+  color: #15803d;
+}
+
+.status.inactive {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+.status.pending {
+  background-color: #fef9c3;
+  color: #92400e;
+}
+
+/* Export button */
+.actions {
+  margin-top: 16px;
+  text-align: right;
+}
+
+.actions button {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 15px;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.actions button:hover {
+  background-color: #1e40af;
+}
+
+/* No data message */
+.no-data-message {
+  padding: 40px;
+  margin-top: 30px;
+  text-align: center;
+  font-size: 18px;
+  background-color: #fef2f2;
+  color: #991b1b;
+  border: 2px dashed #fca5a5;
+  border-radius: 8px;
+}
+
+  
+  button {
+    padding: 8px 16px;
+    background-color: #0066cc;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  button:hover {
+    background-color: #004a99;
+  }
+  

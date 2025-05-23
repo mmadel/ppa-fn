@@ -1,0 +1,51 @@
+<h4>Locations Import</h4>
+<hr/>
+<form [formGroup]="uploadForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+  <div *ngIf="message" [ngClass]="messageType" class="message-box">
+    {{ message }}
+  </div>
+
+  <!-- Drop Zone for Benefit File -->
+  <div
+    class="drop-zone"
+    [class.drop-zone--active]="dragging.benefitFile"
+    (dragover)="onDragOver($event, 'benefitFile')"
+    (dragleave)="onDragLeave($event, 'benefitFile')"
+    (drop)="onFileDrop($event, 'benefitFile')"
+  >
+    <p>Drag & drop <strong>Benefit CSV</strong> here or click to upload</p>
+    <input type="file" accept=".csv" (change)="onFileSelected($event, 'benefitFile')" />
+    <small *ngIf="selectedFiles['benefitFile']">{{ selectedFiles['benefitFile'].name }}</small>
+  </div>
+
+  <!-- Repeat for Documented File -->
+  <div
+    class="drop-zone"
+    [class.drop-zone--active]="dragging.documentFile"
+    (dragover)="onDragOver($event, 'documentFile')"
+    (dragleave)="onDragLeave($event, 'documentFile')"
+    (drop)="onFileDrop($event, 'documentFile')"
+  >
+    <p>Drag & drop <strong>Documented CSV</strong> here or click to upload</p>
+    <input type="file" accept=".csv" (change)="onFileSelected($event, 'documentFile')" />
+    <small *ngIf="selectedFiles['documentFile']">{{ selectedFiles['documentFile'].name }}</small>
+  </div>
+
+  <!-- Payment File -->
+  <div
+    class="drop-zone"
+    [class.drop-zone--active]="dragging.paymentFile"
+    (dragover)="onDragOver($event, 'paymentFile')"
+    (dragleave)="onDragLeave($event, 'paymentFile')"
+    (drop)="onFileDrop($event, 'paymentFile')"
+  >
+    <p>Drag & drop <strong>Payment CSV</strong> here or click to upload</p>
+    <input type="file" accept=".csv" (change)="onFileSelected($event, 'paymentFile')" />
+    <small *ngIf="selectedFiles['paymentFile']">{{ selectedFiles['paymentFile'].name }}</small>
+  </div>
+
+  <button type="submit" [disabled]="!uploadForm.valid || submitting">
+    <span *ngIf="submitting" class="spinner"></span>
+    {{ submitting ? 'Uploading...' : 'Submit' }}
+  </button>
+</form>
