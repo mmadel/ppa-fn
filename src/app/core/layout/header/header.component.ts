@@ -1,7 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { ClassToggleService, HeaderComponent } from '@coreui/angular-pro';
+import { AuthService } from '../../services/auth.service';
 
 
 
@@ -22,11 +24,13 @@ export class DefaultHeaderComponent extends HeaderComponent {
     themeSwitchRadio: new UntypedFormControl('light'),
   });
 
-  constructor(private classToggler: ClassToggleService) {
+  constructor(private classToggler: ClassToggleService
+    , private authService: AuthService
+    , private router: Router) {
     super();
   }
   ngOnInit(): void {
-    
+
   }
   private capitalizeFirstLetter(str: string): string {
     return str.charAt(0).toUpperCase();
@@ -36,9 +40,10 @@ export class DefaultHeaderComponent extends HeaderComponent {
     this.classToggler.toggle('body', 'dark-theme');
   }
   logout() {
-   
+    this.authService.logout();
+    this.router.navigateByUrl('/login');
   }
   setSelectedClinic(event: any) {
-   
+
   }
 }

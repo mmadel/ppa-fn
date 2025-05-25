@@ -53,6 +53,7 @@ export class AuthService {
   }
   logout() {
     localStorage.removeItem('currentUser');
+    localStorage.removeItem('access_token');
     this.currentUserSubject.next(null);
   }
   isAuthenticated(): boolean {
