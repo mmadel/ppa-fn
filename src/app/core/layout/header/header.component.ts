@@ -19,6 +19,8 @@ export class DefaultHeaderComponent extends HeaderComponent {
   public newMessages = new Array(4)
   public newTasks = new Array(5)
   public newNotifications = new Array(5)
+  loggedUser:any
+  loggedInUserAvatar!:string
 
   public themeSwitch = new UntypedFormGroup({
     themeSwitchRadio: new UntypedFormControl('light'),
@@ -30,7 +32,8 @@ export class DefaultHeaderComponent extends HeaderComponent {
     super();
   }
   ngOnInit(): void {
-
+    this.loggedUser= this.authService.currentUserValue;
+    this.loggedInUserAvatar = this.loggedUser.username.charAt(0).toUpperCase();
   }
   private capitalizeFirstLetter(str: string): string {
     return str.charAt(0).toUpperCase();

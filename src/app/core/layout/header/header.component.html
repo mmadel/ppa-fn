@@ -40,7 +40,9 @@
 <ng-template #userDropdown>
   <c-dropdown alignment="end" variant="nav-item">
     <a href [caret]="false" cDropdownToggle class="py-0">
-      <c-avatar color="secondary"   status="success"></c-avatar>
+      <c-avatar color="secondary"   status="success">
+        {{loggedInUserAvatar}}
+      </c-avatar>
     </a>
     <ul cDropdownMenu class="pt-0 pr-5 w-auto">
 
@@ -90,7 +92,7 @@
       <a [routerLink]="[]" cDropdownItem>
         <div class="message">
           <div class="pt-3 me-3 float-start">
-            <c-avatar src="./assets/img/avatars/7.jpg" status="success"></c-avatar>
+            <c-avatar color="secondary" status="danger">CUI</c-avatar>
           </div>
           <div>
             <small class="text-medium-emphasis">John Doe</small>
