@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import * as moment from 'moment';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { map, Observable, tap } from 'rxjs';
 import { ListTemplate } from 'src/app/modules/common/template/list.template';
 import { PatientRecordImportJob } from '../../models/patient.record.import.job';
 import { User } from '../../models/user';
-import { BatchServiceService } from '../../services/batch/batch-service.service';
-import { ClinicService } from '../../services/clinic/clinic.service';
+import { ActivityLogService } from '../../services/activity.log/activity-log.service';
 import { UserService } from '../../services/users/user.service';
 export interface PMRSearchCriteria {
   pmrbId?: string,
   status?: string
+  userName?: string
   createdAt?: Date | string;
 }
 
@@ -22,40 +22,27 @@ export class PatientBatchsComponent extends ListTemplate implements OnInit {
   statuses: string[] = ['Pending', 'Ready', 'Failed']
   importJbos$!: Observable<PatientRecordImportJob[]>;
   users!: Observable<User[]>
-  searchCriteria: PMRSearchCriteria = { status: 'none' }
+  searchCriteria: PMRSearchCriteria = { status: 'none', userName: 'none' }
   columns = [
     {
-      key: 'pmrbId',
+      key: 'requestId',
       label: 'Batch Number',
       _style: { width: '10%' }
     },
     { key: 'createdAt', label: 'Created At', _style: { width: '10%' } },
-    { key: 'completedAt', label: 'Completed At', _style: { width: '10%' } },
+    { key: 'username', label: 'Created By', _style: { width: '10%' } },
     { key: 'status', label: 'Status', _style: { width: '10%' } },
   ];
   errorMsg!: string;
-  constructor(private batchServiceService: BatchServiceService
-    , private userService: UserService) { super(); }
+  constructor(private userService: UserService
+    , private activityLogService: ActivityLogService
+    ,private spinner: NgxSpinnerService) { super(); }
 
   ngOnInit(): void {
     this.initListComponent();
-    // this.find();
+    this.findUsers();
   }
-  private find() {
-    this.importJbos$ = this.batchServiceService.findAll(this.apiParams$).pipe(
-      tap((response: any) => {
-        this.totalItems$.next(response.number_of_matching_records);
-        if (response.number_of_records) {
-          this.errorMessage$.next('');
-        }
-        this.retry$.next(false);
-        this.loadingData$.next(false);
-      }),
-      map((response: any) => {
-        return response.records;
-      })
-    )
-  }
+
   getBadge(status: string) {
     switch (status) {
       case 'Pending':
@@ -74,7 +61,8 @@ export class PatientBatchsComponent extends ListTemplate implements OnInit {
     this.users = this.userService.findAll();
   }
   search() {
-    this.importJbos$ = this.batchServiceService.searchPMR(this.toMap(this.searchCriteria), this.apiParams$).pipe(
+    this.spinner.show();
+    this.importJbos$ = this.activityLogService.search(this.toMap(this.searchCriteria), this.apiParams$).pipe(
       tap((response: any) => {
         this.totalItems$.next(response.number_of_matching_records);
         if (response.number_of_records) {
@@ -84,20 +72,22 @@ export class PatientBatchsComponent extends ListTemplate implements OnInit {
         this.loadingData$.next(false);
       }),
       map((response: any) => {
+        this.spinner.hide();
         return response.records;
       })
     )
   }
   get isSearchDisabled(): boolean {
-    const { pmrbId, status, createdAt } = this.searchCriteria;
+    const { pmrbId, status, createdAt, userName } = this.searchCriteria;
     return (!pmrbId?.trim()) &&
       (status === 'none') &&
+      (userName === 'none') &&
       (createdAt === undefined || createdAt === '')
   }
   toMap(criteria: PMRSearchCriteria): Map<string, any> {
     const map = new Map<string, any>();
     Object.entries(criteria).forEach(([key, value]) => {
-      if (value !== undefined && value !== null && value !== '')
+      if (value !== undefined && value !== null && value !== '' && value !== 'none')
         map.set(key, value);
     });
     return map;

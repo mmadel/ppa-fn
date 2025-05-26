@@ -16,13 +16,19 @@ export const NavItems: INavData[] = [
         url: 'patient/record/import'
       },
       {
-        name: 'Patient Batchs',
-        url: 'patient/record/batchs'
-      },
-      {
         name: 'Location Eligibility',
         url: 'patient/record/eligibility'
       }
     ]
   },
+  {
+    name: 'Activity logs',
+    iconComponent: { name: 'cilBookmark' },
+    children: [
+      {
+        name: 'Patient Batchs',
+        url: 'patient/record/batchs'
+      },
+    ]
+  }
 ];

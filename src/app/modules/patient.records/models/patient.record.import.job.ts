@@ -1,9 +1,9 @@
 export interface PatientRecordImportJob{
     id:number,
-    name:string,
+    username:string,
     status:string,
     createdAt:Date,
-    completedAt:Date,
-    pmrbId:string,
+    updatedAt:Date,
+    requestId:string,
     errorMessage:string
 }

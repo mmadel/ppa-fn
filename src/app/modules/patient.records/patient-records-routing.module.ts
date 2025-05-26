@@ -25,7 +25,7 @@ const routes: Routes = [{
       canActivate: [RoleGuard],
       component: PatientBatchsComponent,
       data: {
-        title: 'Patient Batchs',
+        title: 'activity logs',
         roles: ['ROLE_ADMIN'] 
       },
     },

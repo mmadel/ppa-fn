@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { BatchServiceService } from '../../services/batch/batch-service.service';
 import { UploadPatientFileService } from '../../services/upload.files/upload-patient-file.service';
 
 @Component({
@@ -27,8 +26,7 @@ export class ImportPatientRecordComponent implements OnInit {
   };
   constructor(private fb: FormBuilder,
     private uploadPatientFileService: UploadPatientFileService,
-    private router: Router,
-    private batchServiceService: BatchServiceService
+    private router: Router
   ) {
     this.uploadForm = this.fb.group({
       benefitFile: [null, Validators.required],

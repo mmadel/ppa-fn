@@ -1,14 +1,15 @@
-<h4>Patient Batch Imports</h4>
+<ngx-spinner></ngx-spinner>
+<h4>Activity logs</h4>
 <hr />
 <c-row>
   <c-col xs="12">
     <c-card class="mb-4">
       <c-card-header ngPreserveWhitespaces>
-        <strong>Patient Batch Imports</strong> <small>Search criteria</small>
+        <strong>Activity logs</strong> <small>Search criteria</small>
       </c-card-header>
       <c-card-body>
         <p class="text-medium-emphasis small">
-          The Abiltiy to search for Patient Batch Imports .
+          The Abiltiy to search for request has been created by user  .
         </p>
 
         <!--
@@ -19,13 +20,23 @@
         <form cForm>
           <c-row class="mb-3">
             <label [sm]="2" cCol cLabel="col" for="staticEmail" class="label-width">
-              Batch Number
+              Btach Number
             </label>
             <c-col [sm]="10">
               <input cFormControl sizing="sm" name="pmrbId" [(ngModel)]="searchCriteria.pmrbId">
             </c-col>
           </c-row>
-         
+          <c-row class="mb-3">
+            <label [sm]="2" cCol cLabel="col" for="staticEmail" class="label-width">
+              User
+            </label>
+            <c-col [sm]="10">
+              <select id="location" cSelect name="location" [(ngModel)]="searchCriteria.userName">
+                <option value="none">None</option>
+                <option *ngFor="let user of users |async" [value]="user.username">{{ user.username }}</option>
+              </select>
+            </c-col>
+          </c-row>
           <c-row class="mb-3">
             <label cLabel="col" class="col-sm-2" class="label-width">
               Status
