@@ -11,7 +11,7 @@ const httpOptions = {};
 })
 export class BasePaginationService {
   constructor(public httpClient: HttpClient) { }
-  get(config$: BehaviorSubject<IApiParams>, url: string): Observable<any> {
+  get(config$: BehaviorSubject<IApiParams>, url: string, params?: Map<string, string>): Observable<any> {
     return config$.pipe(
       debounceTime(100),
       distinctUntilChanged(
@@ -19,23 +19,37 @@ export class BasePaginationService {
           return JSON.stringify(previous) === JSON.stringify(current);
         }
       ),
-      switchMap((config) => this.fetchData(config, url))
+      switchMap((config) => this.fetchData(config, url, params))
     );
   }
-  private fetchData(params: IApiParams, url: string): Observable<PaginationData> {
+  private fetchData(
+    params: IApiParams,
+    url: string,
+    extraParams?: Map<string, string>
+  ): Observable<PaginationData> {
     const apiParams = {
-      ...params
+      ...params,
     };
-    const httpParams: HttpParams = new HttpParams({ fromObject: apiParams });
-    const options = Object.keys(httpParams).length
-      ? { params: httpParams, ...httpOptions }
-      : { params: {}, ...httpOptions };
+  
+    let httpParams: HttpParams = new HttpParams({ fromObject: apiParams });
+  
+    if (extraParams !== undefined) {
+      extraParams.forEach((value: string, key: string) => {
+        httpParams = httpParams.append(key, value); // ✅ REASSIGN
+      });
+    }
+  
+    const options = {
+      params: httpParams,
+      ...httpOptions,
+    };
+  
     return this.httpClient
       .get<PaginationData>(url, options)
       .pipe(
         retry({ count: 1, delay: 100000, resetOnSuccess: true }),
         catchError(this.handleHttpError)
-      )
+      );
   }
   private handleHttpError(error: HttpErrorResponse) {
     return throwError(() => error);

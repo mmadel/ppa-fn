@@ -1,110 +1,90 @@
 <h4>Patient Batch Imports</h4>
-<hr/>
+<hr />
 <c-row>
-    <c-col xs="12">
-      <c-card class="mb-4">
-        <c-card-header ngPreserveWhitespaces>
-          <strong>Patient Batch Imports</strong> <small>Search criteria</small>
-        </c-card-header>
-        <c-card-body>
-          <p class="text-medium-emphasis small">
-            The Abiltiy to search for Patient Batch Imports .
-          </p>
-  
-          <!--
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-header ngPreserveWhitespaces>
+        <strong>Patient Batch Imports</strong> <small>Search criteria</small>
+      </c-card-header>
+      <c-card-body>
+        <p class="text-medium-emphasis small">
+          The Abiltiy to search for Patient Batch Imports .
+        </p>
+
+        <!--
                 <div style="float: left;margin-top: 4%;">
                 <svg cIcon name="cilFindInPage" title="cilFindInPage" size="7xl"></svg>
               </div>
             -->
-          <form cForm>
-            <c-row class="mb-3">
-              <label [sm]="2" cCol cLabel="col" for="staticEmail" class="label-width">
-                Btach Number
-              </label>
-              <c-col [sm]="10">
-                <input cFormControl sizing="sm"  name="pmrbId">
-              </c-col>
-            </c-row>
-            <c-row class="mb-3">
-              <label [sm]="2" cCol cLabel="col" for="staticEmail" class="label-width">
-                User
-              </label>
-              <c-col [sm]="10">
-                <select id="location" cSelect  name="location">
-                  <option value="none">None</option>
-                  <option *ngFor="let user of users |async" [value]="user.id">{{ user.username }}</option>
-                </select>
-              </c-col>
-            </c-row>
-            <c-row class="mb-3">
-              <label cLabel="col" class="col-sm-2" class="label-width">
-                Status
-              </label>
-              <c-col [sm]="10">
-                <select id="status" cSelect name="status">
-                  <option value="none">None</option>
-                  <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
-                </select>
-              </c-col>
-            </c-row>
-            <c-row class="mb-3">
-              <label cLabel="col" class="col-sm-2" class="label-width">
-                Create At
-              </label>
-              <c-col [sm]="10">
-                <input type="date" id="lastUpdateDate" cFormControl  name="lastUpdate">
-              </c-col>
-            </c-row>
-            <c-row class="mb-3">
-                <label cLabel="col" class="col-sm-2" class="label-width">
-                  Completed At
-                </label>
-                <c-col [sm]="10">
-                  <input type="date" id="lastUpdateDate" cFormControl  name="lastUpdate">
-                </c-col>
-              </c-row>
-  
-            <c-row>
-              <c-col xs="12" class="text-center">
-                <button cButton class="me-1" color="primary" style="width: 15%;" (click)="search()">
-                  Search
-                </button>
-              </c-col>
-            </c-row>
-          </form>
-        </c-card-body>
-      </c-card>
-    </c-col>
-  </c-row>
+        <form cForm>
+          <c-row class="mb-3">
+            <label [sm]="2" cCol cLabel="col" for="staticEmail" class="label-width">
+              Batch Number
+            </label>
+            <c-col [sm]="10">
+              <input cFormControl sizing="sm" name="pmrbId" [(ngModel)]="searchCriteria.pmrbId">
+            </c-col>
+          </c-row>
+         
+          <c-row class="mb-3">
+            <label cLabel="col" class="col-sm-2" class="label-width">
+              Status
+            </label>
+            <c-col [sm]="10">
+              <select id="status" cSelect name="status" [(ngModel)]="searchCriteria.status">
+                <option value="none">None</option>
+                <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
+              </select>
+            </c-col>
+          </c-row>
+          <c-row class="mb-3">
+            <label cLabel="col" class="col-sm-2" class="label-width">
+              Create At
+            </label>
+            <c-col [sm]="10">
+              <input type="date" id="lastUpdateDate" cFormControl name="createdAt" [(ngModel)]="searchCriteria.createdAt">
+            </c-col>
+          </c-row>
+          <c-row>
+            <c-col xs="12" class="text-center">
+              <button cButton class="me-1" color="primary" style="width: 15%;" (click)="search()" [disabled]="isSearchDisabled">
+                Search
+              </button>
+            </c-col>
+          </c-row>
+        </form>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>
 <ng-container *ngIf="props$ | async as props" fluid="true">
-    <c-smart-table [columnSorter]="{resetable: true }" [columns]="columns" [items]="(importJbos$ | async) ?? []"
-        activePage="1" pagination [itemsPerPage]="props.itemsPerPage"
-        (itemsPerPageChange)="handleItemsPerPageChange($event)" [itemsPerPageOptions]="[5,10,20]"
-        [itemsPerPageSelect]="true" [tableProps]="{ hover: true, striped: true, responsive: true , small:true }"
-        [columnFilterValue]="props.columnFilterValue?? []" [sorterValue]="props.sorterValue"
-        [tableProps]="{ hover: true, striped: true, responsive: true }" [tableBodyProps]="{ align: 'middle' }"
-        (sorterValueChange)="handleSorterValueChange($event)" header>
-        <ng-template cTemplateId="tableData" let-columnName="columnName" let-item="item" let-tdContent="tdContent">
-            <td>
-                <ng-container [ngSwitch]="columnName">
-                    <ng-container *ngSwitchCase="'createdAt'" class="py-2">
-                        {{item.createdAt | date:"MM/dd/yyyy 'at' hh:mm:ss a" }}
-                    </ng-container>
-                    <ng-container *ngSwitchCase="'completedAt'" class="py-2">
-                        {{item.completedAt | date:"MM/dd/yyyy 'at' hh:mm:ss a" }}
-                    </ng-container>
-                    <ng-container *ngSwitchCase="'status'" class="py-2">
-                        <c-badge [color]="getBadge(tdContent)">
-                            {{(item[columnName])}}
-                        </c-badge>
-                    </ng-container>
-                    <ng-container *ngSwitchDefault>
-                        {{tdContent}}
-                    </ng-container>
-                </ng-container>
-            </td>
-        </ng-template>
-    </c-smart-table>
-    <c-smart-pagination *ngIf="props.totalPages" [activePage]="props.activePage"
-        (activePageChange)="handleActivePageChange($event)" [pages]="props.totalPages"></c-smart-pagination>
-
+  <c-smart-table [columnSorter]="{resetable: true }" [columns]="columns" [items]="(importJbos$ | async) ?? []"
+    activePage="1" pagination [itemsPerPage]="props.itemsPerPage"
+    (itemsPerPageChange)="handleItemsPerPageChange($event)" [itemsPerPageOptions]="[5,10,20]"
+    [itemsPerPageSelect]="true" [tableProps]="{ hover: true, striped: true, responsive: true , small:true }"
+    [columnFilterValue]="props.columnFilterValue?? []" [sorterValue]="props.sorterValue"
+    [tableProps]="{ hover: true, striped: true, responsive: true }" [tableBodyProps]="{ align: 'middle' }"
+    (sorterValueChange)="handleSorterValueChange($event)" header>
+    <ng-template cTemplateId="tableData" let-columnName="columnName" let-item="item" let-tdContent="tdContent">
+      <td>
+        <ng-container [ngSwitch]="columnName">
+          <ng-container *ngSwitchCase="'createdAt'" class="py-2">
+            {{item.createdAt | date:"MM/dd/yyyy 'at' hh:mm:ss a" }}
+          </ng-container>
+          <ng-container *ngSwitchCase="'completedAt'" class="py-2">
+            {{item.completedAt | date:"MM/dd/yyyy 'at' hh:mm:ss a" }}
+          </ng-container>
+          <ng-container *ngSwitchCase="'status'" class="py-2">
+            <c-badge [color]="getBadge(tdContent)">
+              {{(item[columnName])}}
+            </c-badge>
+          </ng-container>
+          <ng-container *ngSwitchDefault>
+            {{tdContent}}
+          </ng-container>
+        </ng-container>
+      </td>
+    </ng-template>
+  </c-smart-table>
+  <c-smart-pagination *ngIf="props.totalPages" [activePage]="props.activePage"
+    (activePageChange)="handleActivePageChange($event)" [pages]="props.totalPages"></c-smart-pagination>

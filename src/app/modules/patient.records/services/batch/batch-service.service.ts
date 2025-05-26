@@ -43,7 +43,7 @@ export class BatchServiceService extends BasePaginationService {
     let params = new HttpParams()
     
 
-    if (criteria.pmrbId) {
+    if (criteria.pmrbId && criteria.pmrbId !=='') {
       params = params.set('pmrbId', criteria.pmrbId);
     }
     if (criteria.location && criteria.location !== 'none') {
@@ -78,4 +78,8 @@ export class BatchServiceService extends BasePaginationService {
         });
   }
  
+  public searchPMR(extraParams:Map<string, any>,config$: BehaviorSubject<IApiParams>){
+    var url = this.baseUrl + '/pmr/search'
+    return this.get(config$, url,extraParams)
+  }
 }
