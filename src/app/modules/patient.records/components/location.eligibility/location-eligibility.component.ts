@@ -20,6 +20,9 @@ export interface SearchCriteria {
   styleUrls: ['./location-eligibility.component.css']
 })
 export class LocationEligibilityComponent implements OnInit {
+refreshData() {
+throw new Error('Method not implemented.');
+}
 
   searchCriteria: SearchCriteria = { location: 'none', status: 'none' }
   statuses: string[] = ['Pending', 'Ready', 'Failed']
