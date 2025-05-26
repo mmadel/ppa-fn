@@ -12,7 +12,6 @@ export class RoleGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean {
-      console.log('333')
     const requiredRoles = next.data['roles'] as Array<string>;
     
     if (!requiredRoles || requiredRoles.length === 0) {
@@ -22,7 +21,6 @@ export class RoleGuard implements CanActivate {
     if (this.authService.hasAnyRole(requiredRoles)) {
       return true;
     }
-    
     this.router.navigate(['/access-denied']);
     return false;
   }

@@ -17,8 +17,6 @@ const routes: Routes = [
   },
   {
     path: 'ppa',
-    canActivate: [RoleGuard],
-    data: { roles: ['ROLE_ADMIN'] },
     component: DefaultLayoutComponent,
     children:[
       {

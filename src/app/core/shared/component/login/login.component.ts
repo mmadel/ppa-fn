@@ -60,7 +60,6 @@ export class LoginComponent implements OnInit {
         next: (response) => {
           // Login successful, redirect to returnUrl
           this.spinner.hide();
-          if (this.authService.hasAnyRole(['ROLE_ADMIN'])) {
             this.router.navigate(['/ppa/dashboard'])
               .then(navSuccess => {
                 if (!navSuccess) {
@@ -68,9 +67,7 @@ export class LoginComponent implements OnInit {
                   this.router.navigate(['/']);
                 }
               });
-          } else {
-            this.router.navigate(['/access-denied']);
-          }
+          
         },
         error: (err) => {
           console.error('Login error:', err); // Debug log 5
