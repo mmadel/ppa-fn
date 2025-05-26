@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
@@ -11,6 +11,9 @@ export class UploadPatientFileService {
 
   upload(formData: FormData){
     let url = this.baseUrl + '/upload'
-    return this.httpClient.post(url, formData);
+    let headers = new HttpHeaders({
+      'X-Request-Tag': 'IMPORT'
+    });
+    return this.httpClient.post(url, formData,{ headers });
   }
 }
