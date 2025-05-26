@@ -1,5 +1,6 @@
 <h4>Locations Import</h4>
 <hr/>
+
 <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
   <div *ngIf="message" [ngClass]="messageType" class="message-box">
     {{ message }}

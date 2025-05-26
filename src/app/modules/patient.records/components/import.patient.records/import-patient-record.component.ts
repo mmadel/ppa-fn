@@ -115,7 +115,4 @@ export class ImportPatientRecordComponent implements OnInit {
       }
     });
   }
-  test(){
-    alert('inside test function')
-  }
 }

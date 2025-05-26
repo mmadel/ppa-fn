@@ -3,8 +3,10 @@ import * as moment from 'moment';
 import { map, Observable, tap } from 'rxjs';
 import { ListTemplate } from 'src/app/modules/common/template/list.template';
 import { PatientRecordImportJob } from '../../models/patient.record.import.job';
+import { User } from '../../models/user';
 import { BatchServiceService } from '../../services/batch/batch-service.service';
 import { ClinicService } from '../../services/clinic/clinic.service';
+import { UserService } from '../../services/users/user.service';
 
 @Component({
   selector: 'app-patient-batchs',
@@ -12,7 +14,9 @@ import { ClinicService } from '../../services/clinic/clinic.service';
   styleUrls: ['./patient-batchs.component.css']
 })
 export class PatientBatchsComponent extends ListTemplate implements OnInit {
+  statuses: string[] = ['Pending', 'Ready', 'Failed']
   importJbos$!: Observable<PatientRecordImportJob[]>;
+  users!: Observable<User[]>
   columns = [
     {
       key: 'pmrbId',
@@ -25,11 +29,13 @@ export class PatientBatchsComponent extends ListTemplate implements OnInit {
   ];
   errorMsg!: string;
   constructor(private batchServiceService: BatchServiceService
-    , private clinicService: ClinicService) { super(); }
+    , private clinicService: ClinicService
+    , private userService: UserService) { super(); }
 
   ngOnInit(): void {
     this.initListComponent();
     this.find();
+    this.findUsers();
   }
   private find() {
     this.importJbos$ = this.batchServiceService.findAll(this.apiParams$).pipe(
@@ -59,5 +65,11 @@ export class PatientBatchsComponent extends ListTemplate implements OnInit {
       default:
         return 'primary'
     }
+  }
+  private findUsers() {
+    this.users = this.userService.findAll();
+  }
+  search() {
+    this.userService.findAll();
   }
 }
