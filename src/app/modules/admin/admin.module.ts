@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { AdminRoutingModule } from './admin-routing.module';
 import { ListUserComponent } from './component/users/list/list-user.component';
+import { BadgeModule } from '@coreui/angular-pro';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { ListUserComponent } from './component/users/list/list-user.component';
   ],
   imports: [
     CommonModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    BadgeModule
   ]
 })
 export class AdminModule { }
