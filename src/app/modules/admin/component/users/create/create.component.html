@@ -1,0 +1,32 @@
+<div class="form-wrapper">
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="form-card">
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input id="username" type="text" formControlName="username" placeholder="Enter your username" />
+      <div class="error" *ngIf="submitted && f['username'].errors">
+        <small *ngIf="f['username'].errors['required']">Username is required.</small>
+        <small *ngIf="f['username'].errors['minlength']">Min 3 characters required.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input id="email" type="email" formControlName="email" placeholder="Enter your email" />
+      <div class="error" *ngIf="submitted && f['email'].errors">
+        <small *ngIf="f['email'].errors['required']">Email is required.</small>
+        <small *ngIf="f['email'].errors['email']">Invalid email format.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input id="password" type="password" formControlName="password" placeholder="Enter your password" />
+      <div class="error" *ngIf="submitted && f['password'].errors">
+        <small *ngIf="f['password'].errors['required']">Password is required.</small>
+        <small *ngIf="f['password'].errors['minlength']">Min 6 characters required.</small>
+      </div>
+    </div>
+
+    <button type="submit" class="submit-btn">Register</button>
+  </form>
+</div>

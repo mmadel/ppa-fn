@@ -10,6 +10,7 @@ import { UserService } from '../../../service/user/user.service';
 })
 export class ListUserComponent implements OnInit {
   users!: Observable<User[]>
+  createUserVisibility: boolean = false;
   constructor(private userService:UserService) { }
 
   ngOnInit(): void {
@@ -17,5 +18,8 @@ export class ListUserComponent implements OnInit {
   }
   private findAllUsers(){
     this.users = this.userService.find();
+  }
+  togglecreateUser(){
+    this.createUserVisibility = !this.createUserVisibility;
   }
 }

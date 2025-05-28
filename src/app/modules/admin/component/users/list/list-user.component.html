@@ -1,5 +1,5 @@
 
-    <button cButton color="primary" shape="rounded-pill" class="d-block mr-0 ml-auto">
+    <button cButton color="primary" shape="rounded-top" class="d-block mr-0 ml-auto" (click)="togglecreateUser()">
         Create New User </button>
 
 <div class="table-container" *ngIf="users | async">
@@ -29,3 +29,13 @@
         </tbody>
     </table>
 </div>
+<c-modal id="editClinic" [visible]="createUserVisibility" size="lg" backdrop="static">
+    <c-modal-header>
+      <h3 cModalTitle>User Creation</h3>
+      <button (click)="togglecreateUser()" cButtonClose></button>
+    </c-modal-header>
+    <c-modal-body>
+        <create></create>
+    </c-modal-body>
+  </c-modal>
+  
