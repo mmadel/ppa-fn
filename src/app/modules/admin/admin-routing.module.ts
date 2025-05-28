@@ -11,12 +11,12 @@ const routes: Routes = [
     }, 
     children: [
       {
-        path: 'import',
+        path: 'users',
         canActivate: [RoleGuard],
         component: ListUserComponent,
         data: {
           title: 'users',
-          roles: ['ROLE_ADMIN','ROLE_USER'] 
+          roles: ['ROLE_MODERATOR'] 
         },
       },
     ]

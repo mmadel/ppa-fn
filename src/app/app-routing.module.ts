@@ -29,6 +29,11 @@ const routes: Routes = [
         loadChildren: () =>
           import('./modules/patient.records/patient-records.module').then((m) => m.PatientRecordsModule)
       },
+      {
+        path: 'admin',
+        loadChildren: () =>
+          import('./modules/admin/admin.module').then((m) => m.AdminModule)
+      },
     ]
   },
   // Wildcard route should also be protected
