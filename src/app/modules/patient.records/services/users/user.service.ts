@@ -12,7 +12,7 @@ export class UserService {
   constructor(private httpClient: HttpClient) { }
 
   findAll() {
-    const url = this.baseUrl +'/find'
+    const url = this.baseUrl +'/list'
     return this.httpClient.get(url).pipe(
       map((response: any) => <User[]>response));
   }

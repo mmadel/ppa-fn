@@ -14,10 +14,10 @@ export class DefaultLayoutComponent implements OnInit {
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
-    // if (this.authService.hasRole('ROLE_ADMIN')){
-    //   this.navItems = NavItems;
-    //   return;
-    // }
+    if (this.authService.hasRole('ROLE_ADMIN')){
+      this.navItems = NavItems;
+      return;
+    }
     if (this.authService.hasRole('ROLE_USER')){
       this.navItems = NavNormalItems;
       return
