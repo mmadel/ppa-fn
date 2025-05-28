@@ -29,7 +29,16 @@
         <small *ngIf="f['password'].errors['minlength']">Min 6 characters required.</small>
       </div>
     </div>
-
+    <div class="form-group">
+      <label for="role">User Role</label>
+      <select cSelect id="role" formControlName="role">
+        <option value="ROLE_USER">Standard</option>
+        <option value="ROLE_ADMIN">Administrator</option>
+      </select>
+      <div class="error" *ngIf="submitted && f['role'].errors">
+        <small *ngIf="f['role'].errors['required']">User role is required.</small>
+      </div>
+    </div>
     <button type="submit" class="submit-btn">Register</button>
   </form>
 </div>

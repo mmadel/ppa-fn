@@ -19,6 +19,7 @@ export class CreateComponent implements OnInit {
       username: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
+      role: ['ROLE_USER', Validators.required]
     });
   }
   get f() {
