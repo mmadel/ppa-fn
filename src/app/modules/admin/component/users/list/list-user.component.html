@@ -35,7 +35,7 @@
       <button (click)="togglecreateUser()" cButtonClose></button>
     </c-modal-header>
     <c-modal-body>
-        <create (changeVisibility)="changeFacilityVisibility($event)"></create>
+        <create (changeVisibility)="changeFacilityVisibility($event)" *ngIf="createUserVisibility"></create>
     </c-modal-body>
   </c-modal>
   

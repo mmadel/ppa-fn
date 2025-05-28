@@ -6,11 +6,6 @@ import { RoleGuard } from './core/guards/role.guard';
 import { LoginComponent } from './core/shared/component/login/login.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    redirectTo: 'ppa/dashboard',
-    pathMatch: 'full',
-  },
   { 
     path: 'login', 
     component: LoginComponent 

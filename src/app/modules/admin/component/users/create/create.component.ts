@@ -38,6 +38,7 @@ export class CreateComponent implements OnInit {
         this.spinner.hide();
         this.hasError = false;
         this.errorMessage = undefined;
+        this.registerForm.reset();
         this.changeVisibility.emit('close')
       }, error => {
         this.hasError = true;
