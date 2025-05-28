@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { UserService } from '../../../service/user/user.service';
 
 @Component({
   selector: 'create',
@@ -9,7 +11,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class CreateComponent implements OnInit {
   registerForm!: FormGroup;
   submitted = false;
-  constructor(private fb: FormBuilder) { 
+  hasError: boolean = false
+  @Output() changeVisibility = new EventEmitter<string>()
+  errorMessage!: string | undefined;
+  constructor(private fb: FormBuilder, private userService: UserService,private spinner: NgxSpinnerService) {
     this.registerForm = this.fb.group({
       username: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
@@ -26,9 +31,18 @@ export class CreateComponent implements OnInit {
     this.submitted = true;
     if (this.registerForm.invalid) {
       return;
+    } else {
+      this.spinner.show()
+      this.userService.create(this.registerForm.value).subscribe(reuslt => {
+        this.spinner.hide();
+        this.hasError = false;
+        this.errorMessage = undefined;
+        this.changeVisibility.emit('close')
+      }, error => {
+        this.hasError = true;
+        this.errorMessage = error.error.error;
+      })
     }
-
-    // Normally you'd send this data to your backend here
     console.log('Form Submitted:', this.registerForm.value);
   }
 }

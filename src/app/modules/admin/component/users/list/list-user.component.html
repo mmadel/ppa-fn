@@ -1,4 +1,4 @@
-
+<ngx-spinner></ngx-spinner>
     <button cButton color="primary" shape="rounded-top" class="d-block mr-0 ml-auto" (click)="togglecreateUser()">
         Create New User </button>
 
@@ -35,7 +35,7 @@
       <button (click)="togglecreateUser()" cButtonClose></button>
     </c-modal-header>
     <c-modal-body>
-        <create></create>
+        <create (changeVisibility)="changeFacilityVisibility($event)"></create>
     </c-modal-body>
   </c-modal>
   

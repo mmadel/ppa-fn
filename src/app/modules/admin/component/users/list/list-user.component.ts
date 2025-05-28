@@ -22,4 +22,10 @@ export class ListUserComponent implements OnInit {
   togglecreateUser(){
     this.createUserVisibility = !this.createUserVisibility;
   }
+  changeFacilityVisibility(event:any){
+    if(event ==='close'){
+      this.createUserVisibility = false;
+      this.findAllUsers();
+    }
+  }
 }
