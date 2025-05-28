@@ -23,7 +23,7 @@
 
   <div class="form-panel">
     <div class="login-card">
-
+      <c-alert color="danger" *ngIf="hasLoginError">{{errorMessage}}</c-alert>
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
         <label>User Name</label>
         <input formControlName="userName" placeholder="User Name" required />

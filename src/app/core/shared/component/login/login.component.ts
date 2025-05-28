@@ -14,16 +14,17 @@ export class LoginComponent implements OnInit {
   loading = false;
   submitted = false;
   hidePassword = true;
+  hasLoginError: boolean = false
   errorMessage: string | undefined;
   constructor(private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
-    private spinner: NgxSpinnerService) { 
-      if (this.authService.currentUserValue) {
-        this.router.navigate(['/']);
-      }
+    private spinner: NgxSpinnerService) {
+    if (this.authService.currentUserValue) {
+      this.router.navigate(['/']);
     }
+  }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -53,26 +54,31 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    this.loading = true;!
-    this.spinner.show();
+    this.loading = true; !
+      this.spinner.show();
     this.authService.login(this.f['userName'].value, this.f['password'].value)
       .subscribe({
         next: (response) => {
           // Login successful, redirect to returnUrl
+          this.hasLoginError = false
+          this.errorMessage = undefined
           this.spinner.hide();
-            this.router.navigate(['/ppa/dashboard'])
-              .then(navSuccess => {
-                if (!navSuccess) {
-                  console.error('Navigation failed, redirecting to fallback');
-                  this.router.navigate(['/']);
-                }
-              });
-          
+          this.router.navigate(['/ppa/dashboard'])
+            .then(navSuccess => {
+              if (!navSuccess) {
+                console.error('Navigation failed, redirecting to fallback');
+                this.router.navigate(['/']);
+              }
+            });
+
         },
         error: (err) => {
-          console.error('Login error:', err); // Debug log 5
+          this.spinner.hide();
+          this.hasLoginError = true
+          this.errorMessage = err.error.error
+          console.error('Login error:', err.error.error);
         }
-        
+
       });
   }
 }

@@ -8,6 +8,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { IconModule } from '@coreui/icons-angular';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
+  AlertModule,
   AvatarModule,
   BadgeModule,
   BreadcrumbModule,
@@ -96,6 +97,7 @@ export function getSafeAllowedDomains(): string[] {
     ReactiveFormsModule,
     IconModule,
     FormsModule,
+    AlertModule,
     DateRangePickerModule,BrowserAnimationsModule,
     JwtModule.forRoot({
       jwtOptionsProvider: {
