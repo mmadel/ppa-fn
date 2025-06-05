@@ -97,7 +97,7 @@
           </ng-container>
           <ng-container *ngSwitchCase="'view'" class="py-2">
             <span *ngIf="item.status ==='Failed'">
-              <button cButton color="link" (click)="toggleFailedReasons()">Failed Reasons</button>
+              <button cButton color="link" (click)="openFailedReasons(item.errorMessage)">Failed Reasons</button>
             </span>
           </ng-container>
           <ng-container *ngSwitchDefault>
@@ -110,12 +110,12 @@
   <c-smart-pagination *ngIf="props.totalPages" [activePage]="props.activePage"
     (activePageChange)="handleActivePageChange($event)" [pages]="props.totalPages"></c-smart-pagination>
 
-  <c-modal id="FailedReasons" [visible]="failedReasonsVisibility" size="xl" backdrop="static">
+  <c-modal id="FailedReasons" [visible]="failedReasonsVisibility" size="lg">
     <c-modal-header>
       <h3 cModalTitle>Failed Reason</h3>
       <button (click)="toggleFailedReasons()" cButtonClose></button>
     </c-modal-header>
     <c-modal-body>
-ddkdkd
+      <div [innerHTML]="batchErrorMessage"></div>
     </c-modal-body>
   </c-modal>

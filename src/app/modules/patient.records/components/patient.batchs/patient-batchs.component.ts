@@ -23,6 +23,7 @@ export class PatientBatchsComponent extends ListTemplate implements OnInit {
   importJbos$!: Observable<PatientRecordImportJob[]>;
   users!: Observable<User[]>
   searchCriteria: PMRSearchCriteria = { status: 'none', userName: 'none' }
+  batchErrorMessage:string| undefined = undefined;
   columns = [
     {
       key: 'requestId',
@@ -43,6 +44,11 @@ export class PatientBatchsComponent extends ListTemplate implements OnInit {
   ngOnInit(): void {
     this.initListComponent();
     this.findUsers();
+  }
+  openFailedReasons(item:string){
+    this.batchErrorMessage =`<p><strong>Error Cause </strong> <br/>, ${item}.</p>`; 
+
+    this.failedReasonsVisibility = true;
   }
   toggleFailedReasons(){
     this.failedReasonsVisibility = !this.failedReasonsVisibility
