@@ -3,7 +3,7 @@
 
 <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
   <div *ngIf="message" [ngClass]="messageType" class="message-box">
-    {{ message }}
+    <div [innerHTML]="message"></div>
   </div>
 
   <!-- Drop Zone for Benefit File -->
