@@ -32,8 +32,10 @@ export class PatientBatchsComponent extends ListTemplate implements OnInit {
     { key: 'createdAt', label: 'Created At', _style: { width: '10%' } },
     { key: 'username', label: 'Created By', _style: { width: '10%' } },
     { key: 'status', label: 'Status', _style: { width: '10%' } },
+    { key: 'view', label: 'View', _style: { width: '10%' } },
   ];
   errorMsg!: string;
+  failedReasonsVisibility: boolean = false;
   constructor(private userService: UserService
     , private activityLogService: ActivityLogService
     ,private spinner: NgxSpinnerService) { super(); }
@@ -42,7 +44,9 @@ export class PatientBatchsComponent extends ListTemplate implements OnInit {
     this.initListComponent();
     this.findUsers();
   }
-
+  toggleFailedReasons(){
+    this.failedReasonsVisibility = !this.failedReasonsVisibility
+  }
   getBadge(status: string) {
     switch (status) {
       case 'Pending':
