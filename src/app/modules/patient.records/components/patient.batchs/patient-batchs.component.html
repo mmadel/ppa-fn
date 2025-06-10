@@ -9,7 +9,7 @@
       </c-card-header>
       <c-card-body>
         <p class="text-medium-emphasis small">
-          The Abiltiy to search for request has been created by user  .
+          The Abiltiy to search for request has been created by user .
         </p>
 
         <!--
@@ -53,12 +53,14 @@
               Create At
             </label>
             <c-col [sm]="10">
-              <input type="date" id="lastUpdateDate" cFormControl name="createdAt" [(ngModel)]="searchCriteria.createdAt">
+              <input type="date" id="lastUpdateDate" cFormControl name="createdAt"
+                [(ngModel)]="searchCriteria.createdAt">
             </c-col>
           </c-row>
           <c-row>
             <c-col xs="12" class="text-center">
-              <button cButton class="me-1" color="primary" style="width: 15%;" (click)="search()" [disabled]="isSearchDisabled">
+              <button cButton class="me-1" color="primary" style="width: 15%;" (click)="search()"
+                [disabled]="isSearchDisabled">
                 Search
               </button>
             </c-col>
@@ -79,6 +81,9 @@
     <ng-template cTemplateId="tableData" let-columnName="columnName" let-item="item" let-tdContent="tdContent">
       <td>
         <ng-container [ngSwitch]="columnName">
+          <ng-container *ngSwitchCase="'requestId'" class="py-2">
+            {{item.requestId}}
+          </ng-container>
           <ng-container *ngSwitchCase="'createdAt'" class="py-2">
             {{item.createdAt | date:"MM/dd/yyyy 'at' hh:mm:ss a" }}
           </ng-container>
@@ -90,6 +95,11 @@
               {{(item[columnName])}}
             </c-badge>
           </ng-container>
+          <ng-container *ngSwitchCase="'view'" class="py-2">
+            <span *ngIf="item.status ==='Failed'">
+              <button cButton color="link" (click)="openFailedReasons(item.errorMessage)">Failed Reasons</button>
+            </span>
+          </ng-container>
           <ng-container *ngSwitchDefault>
             {{tdContent}}
           </ng-container>
@@ -99,3 +109,13 @@
   </c-smart-table>
   <c-smart-pagination *ngIf="props.totalPages" [activePage]="props.activePage"
     (activePageChange)="handleActivePageChange($event)" [pages]="props.totalPages"></c-smart-pagination>
+
+  <c-modal id="FailedReasons" [visible]="failedReasonsVisibility" size="lg">
+    <c-modal-header>
+      <h3 cModalTitle>Failed Reason</h3>
+      <button (click)="toggleFailedReasons()" cButtonClose></button>
+    </c-modal-header>
+    <c-modal-body>
+      <div [innerHTML]="batchErrorMessage"></div>
+    </c-modal-body>
+  </c-modal>

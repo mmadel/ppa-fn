@@ -67,11 +67,16 @@ export class ImportPatientRecordComponent implements OnInit {
 
       this.uploadPatientFileService.upload(formData).subscribe({
         next: (response: any) => {
-          this.message = 'Files uploaded successfully!';
-          this.messageType = 'success';
           this.submitting = false;
-          console.log(JSON.stringify(response.pmrbId))
-          this.redirectToLocationEligibility(response.pmrbId);
+          console.log(JSON.stringify(response))
+          if (!response.hasError)
+            this.redirectToLocationEligibility(response.pmrbId);
+          else {
+            console.log('response Error : ' + response.errorMessage)
+            this.message = response.errorMessage + '<br>' + "Batch Number is : " + response.pmrbId;
+            this.messageType = 'error';
+          }
+
           this.clearForm();
         },
         error: err => {
@@ -106,9 +111,9 @@ export class ImportPatientRecordComponent implements OnInit {
       this.uploadForm.get(key)?.updateValueAndValidity(); // ✅ Ensures validity
     }
   }
-  private redirectToLocationEligibility(pmrbId:string) {
+  private redirectToLocationEligibility(pmrbId: string) {
     this.router.navigate(['ppa/patient/record/eligibility'], {
-      queryParams: { 
+      queryParams: {
         prmbId: pmrbId
       }
     });
